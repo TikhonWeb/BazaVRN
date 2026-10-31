@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>БАЗА — барбершоп в Воронеже | Кольцовская, 24</title>
+<meta name="description" content="БАЗА — мужской барбершоп в Воронеже. Точные стрижки, фейд, борода. Ежедневно 10:00–22:00. Кольцовская, 24. Онлайн-запись.">
+<meta property="og:title" content="БАЗА — барбершоп в Воронеже">
+<meta property="og:description" content="Точные стрижки, чистые переходы. Кольцовская, 24. Ежедневно 10:00–22:00.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230A0A0A'/><text x='50' y='50' dy='.35em' text-anchor='middle' font-family='Arial Black,sans-serif' font-size='52' fill='%23C9A84C'>Б</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #0a0a0a;
+    --bg-2:    #0e0e0e;
+    --card:    #131313;
+    --gold:    #c9a84c;
+    --gold-h:  #e6c66a;
+    --white:   #f2f2f2;
+    --gray:    #9a9a9a;
+    --line:    rgba(255,255,255,.08);
+    --line-g:  rgba(201,168,76,.22);
+    --display: 'Bebas Neue', Impact, sans-serif;
+    --body:    'Inter', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body {
+    background: var(--bg); color: var(--white); font-family: var(--body);
+    font-size: 16px; line-height: 1.6; overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  ::selection { background: var(--gold); color: var(--bg); }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); }
+
+  /* ---------- Кнопки ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+    font-family: var(--display); font-size: 1.05rem; letter-spacing: .12em;
+    padding: .9rem 2.2rem; border: 2px solid var(--gold); color: var(--bg); background: var(--gold);
+    cursor: pointer; transition: background .2s, color .2s, transform .1s, box-shadow .25s;
+    text-align: center; line-height: 1;
+  }
+  .btn:hover { background: var(--gold-h); border-color: var(--gold-h); box-shadow: 0 10px 30px -12px rgba(201,168,76,.6); }
+  .btn:active { transform: scale(.985); }
+  .btn--ghost { background: transparent; color: var(--gold); }
+  .btn--ghost:hover { background: var(--gold); color: var(--bg); }
+
+  /* ---------- Шапка ---------- */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 68px;
+    display: flex; align-items: center;
+    background: rgba(10,10,10,.82); backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid transparent; transition: border-color .3s, background .3s;
+  }
+  .nav.scrolled { background: rgba(10,10,10,.95); border-bottom-color: var(--line-g); }
+  .nav__inner { display: flex; align-items: center; gap: 2rem; width: 100%; }
+  .nav__logo { font-family: var(--display); font-size: 1.85rem; letter-spacing: .2em; color: var(--white); line-height: 1; }
+  .nav__logo span { color: var(--gold); }
+  .nav__links { display: flex; gap: 1.9rem; list-style: none; margin-left: auto; }
+  .nav__links a {
+    font-family: var(--display); font-size: 1rem; letter-spacing: .11em; color: var(--gray);
+    position: relative; padding: .3rem 0; transition: color .2s;
+  }
+  .nav__links a::after {
+    content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px;
+    background: var(--gold); transition: right .25s cubic-bezier(.22,.61,.36,1);
+  }
+  .nav__links a:hover { color: var(--white); }
+  .nav__links a:hover::after { right: 0; }
+  .nav .btn { padding: .6rem 1.4rem; font-size: .95rem; }
+  .burger {
+    display: none; flex-direction: column; gap: 5px; background: none; border: 0;
+    cursor: pointer; padding: 6px; margin-left: auto;
+  }
+  .burger span { width: 24px; height: 2px; background: var(--white); transition: transform .25s, opacity .2s; }
+  .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .burger.open span:nth-child(2) { opacity: 0; }
+  .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mob-nav {
+    position: fixed; inset: 0; z-index: 190; background: rgba(10,10,10,.98);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.8rem;
+    opacity: 0; pointer-events: none; transition: opacity .25s;
+  }
+  .mob-nav.open { opacity: 1; pointer-events: auto; }
+  .mob-nav a { font-family: var(--display); font-size: 2rem; letter-spacing: .1em; }
+  .mob-nav .btn { font-size: 1.3rem; }
+
+  /* ---------- Герой ---------- */
+  .hero {
+    position: relative; min-height: 100svh; display: grid; place-items: center;
+    padding: 110px 0 70px; overflow: hidden; text-align: center;
+  }
+  .hero__photo {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: url("https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a9/The_Spot_Barbershop.jpg/1280px-The_Spot_Barbershop.jpg");
+    background-size: cover; background-position: center 30%;
+    filter: grayscale(1) contrast(1.12) brightness(.4);
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(900px 520px at 50% -10%, rgba(201,168,76,.18), transparent 62%),
+      linear-gradient(180deg, rgba(10,10,10,.5) 0%, rgba(10,10,10,.72) 45%, #0a0a0a 100%);
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; z-index: 0; opacity: .35;
+    background-image: repeating-linear-gradient(115deg, rgba(201,168,76,.05) 0 1px, transparent 1px 10px);
+    mask-image: radial-gradient(60% 60% at 50% 40%, #000, transparent 75%);
+    -webkit-mask-image: radial-gradient(60% 60% at 50% 40%, #000, transparent 75%);
+  }
+  .hero__inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+  .hero__mark {
+    font-family: var(--display); font-size: clamp(5.5rem, 24vw, 15rem); line-height: .82;
+    letter-spacing: .06em; color: var(--white);
+    text-shadow: 0 0 60px rgba(201,168,76,.18);
+  }
+  .hero__mark em { font-style: normal; color: var(--gold); }
+  .hero__rule { width: 70px; height: 2px; background: var(--gold); box-shadow: 0 0 14px rgba(201,168,76,.7); }
+  .hero__tag {
+    font-family: var(--display); font-size: clamp(1rem, 2.4vw, 1.45rem);
+    letter-spacing: .34em; color: var(--gold); text-transform: uppercase;
+  }
+  .hero__sub { max-width: 40ch; color: var(--gray); font-size: 1rem; margin-top: .2rem; }
+  .hero__actions { display: flex; gap: .8rem; flex-wrap: wrap; justify-content: center; margin-top: .6rem; }
+  .hero__meta {
+    display: flex; gap: 1.6rem; flex-wrap: wrap; justify-content: center;
+    margin-top: 1.4rem; color: var(--gray); font-size: .85rem; letter-spacing: .04em;
+  }
+  .hero__meta b { color: var(--white); font-weight: 500; }
+  .status { display: inline-flex; align-items: center; gap: .6rem; }
+  .status i { width: 8px; height: 8px; border-radius: 50%; background: var(--gray); flex: none; }
+  .status.open i { background: #4caf50; animation: pulse 2s infinite; }
+  .status.closed i { background: #e5484d; }
+
+  /* ---------- Бегущая строка ---------- */
+  .marquee {
+    border-block: 1px solid var(--line); background: #0c0c0c; overflow: hidden;
+    font-family: var(--display); font-size: .95rem; letter-spacing: .22em; color: var(--gray);
+  }
+  .marquee__track { display: flex; width: max-content; animation: slide 32s linear infinite; }
+  .marquee__group { display: flex; flex: none; }
+  .marquee__group span { display: inline-flex; align-items: center; gap: 1.6rem; padding: .85rem .8rem; white-space: nowrap; }
+  .marquee__group span::after { content: "✦"; color: var(--gold); font-size: .7rem; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* ---------- Секции ---------- */
+  section { padding: clamp(64px, 9vw, 120px) 0; scroll-margin-top: 68px; }
+  .sec-head { text-align: center; margin-bottom: clamp(2rem, 4vw, 3.2rem); }
+  .sec-head--left { text-align: left; }
+  .eyebrow {
+    font-family: var(--display); font-size: .95rem; letter-spacing: .3em; color: var(--gold);
+    display: inline-block; margin-bottom: .5rem;
+  }
+  h2 {
+    font-family: var(--display); font-size: clamp(2.2rem, 6vw, 4rem); line-height: .95;
+    letter-spacing: .04em; text-wrap: balance;
+  }
+  .sec-head p { color: var(--gray); max-width: 56ch; margin: .9rem auto 0; font-size: .98rem; }
+  .sec-head--left p { margin-left: 0; }
+
+  /* О нас */
+  #about { background: linear-gradient(180deg, #0a0a0a, #0d0d0d); }
+  .about { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+  .about__text { color: var(--gray); font-size: 1.05rem; line-height: 1.85; }
+  .about__text strong { color: var(--white); font-weight: 500; }
+  .perks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 2rem; }
+  .perk {
+    display: flex; align-items: center; gap: .8rem; padding: 1rem 1.1rem;
+    border: 1px solid var(--line); background: var(--card);
+    font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; color: var(--white);
+    transition: border-color .25s, transform .25s;
+  }
+  .perk:hover { border-color: var(--line-g); transform: translateY(-2px); }
+  .perk svg { color: var(--gold); flex: none; }
+  .about__visual {
+    aspect-ratio: 4 / 5; position: relative; border: 1px solid var(--line-g);
+    display: grid; place-items: center; overflow: hidden; background: #111;
+  }
+  .about__visual img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(1) contrast(1.1) brightness(.62);
+    transition: filter .5s, transform .6s;
+  }
+  .about__visual:hover img { filter: grayscale(.4) contrast(1.05) brightness(.75); transform: scale(1.03); }
+  .about__visual::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,10,.15), rgba(10,10,10,.65));
+  }
+  .about__visual::before {
+    content: ""; position: absolute; inset: 12px; border: 1px solid rgba(201,168,76,.25); z-index: 2;
+  }
+  .about__visual span {
+    position: relative; z-index: 3; align-self: end; justify-self: center;
+    font-family: var(--display); font-size: clamp(1.6rem, 4vw, 2.6rem); letter-spacing: .18em;
+    color: var(--gold); text-align: center; padding: 0 1rem 1.4rem; line-height: 1.1;
+    text-shadow: 0 2px 18px rgba(0,0,0,.9);
+  }
+
+  /* Услуги */
+  #services { background: #080808; }
+  .services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .svc {
+    position: relative; background: var(--card); border: 1px solid var(--line);
+    display: flex; flex-direction: column; overflow: hidden;
+    transition: border-color .3s, transform .3s, box-shadow .3s;
+  }
+  .svc:hover { border-color: var(--line-g); transform: translateY(-5px); box-shadow: 0 20px 50px -30px rgba(201,168,76,.5); }
+  .svc__top {
+    height: 158px; display: grid; place-items: center; position: relative; overflow: hidden;
+    background:
+      radial-gradient(90% 130% at 50% 0%, rgba(201,168,76,.16), transparent 65%),
+      linear-gradient(180deg, #191919, #101010);
+    border-bottom: 1px solid var(--line);
+  }
+  .svc__top img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(1) brightness(.5) contrast(1.1);
+    transition: filter .45s, transform .6s;
+  }
+  .svc:hover .svc__top img { filter: grayscale(.5) brightness(.65); transform: scale(1.05); }
+  .svc__top::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,10,.2), rgba(10,10,10,.6));
+  }
+  .svc__num {
+    position: relative; z-index: 2;
+    font-family: var(--display); font-size: 3rem; line-height: 1;
+    color: rgba(230,198,106,.75); letter-spacing: .05em;
+    text-shadow: 0 2px 14px rgba(0,0,0,.9);
+  }
+  .svc__body { padding: 1.2rem 1.3rem 1.4rem; display: flex; flex-direction: column; gap: .7rem; flex: 1; }
+  .svc__name { font-family: var(--display); font-size: 1.4rem; letter-spacing: .06em; line-height: 1.1; }
+  .row {
+    display: flex; align-items: baseline; gap: .6rem;
+    font-size: .9rem; padding-bottom: .45rem; border-bottom: 1px solid rgba(255,255,255,.055);
+  }
+  .row:last-child { border-bottom: 0; padding-bottom: 0; }
+  .row__label { color: var(--gray); display: flex; align-items: center; gap: .4rem; }
+  .row__price { margin-left: auto; font-family: var(--display); font-size: 1.15rem; letter-spacing: .05em; color: var(--gold); white-space: nowrap; }
+  .vip {
+    font-family: var(--body); font-size: .58rem; font-weight: 600; letter-spacing: .1em;
+    background: var(--gold); color: var(--bg); padding: 1px 4px; vertical-align: middle;
+  }
+  .svc__cta {
+    margin-top: auto; font-family: var(--display); letter-spacing: .12em; font-size: .9rem;
+    color: var(--gray); transition: color .2s; display: inline-flex; align-items: center; gap: .4rem;
+  }
+  .svc:hover .svc__cta { color: var(--gold); }
+
+  /* Отзывы */
+  .reviews { position: relative; }
+  .rev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+  .rev {
+    background: var(--card); border: 1px solid var(--line); padding: 1.5rem 1.4rem;
+    display: flex; flex-direction: column; gap: .8rem;
+    transition: border-color .3s, transform .3s;
+  }
+  .rev:hover { border-color: var(--line-g); transform: translateY(-3px); }
+  .rev__stars { color: var(--gold); letter-spacing: 2px; font-size: .85rem; }
+  .rev__text { color: #b8b8b8; font-size: .92rem; line-height: 1.75; font-style: italic; flex: 1; }
+  .rev__name { font-family: var(--display); letter-spacing: .08em; color: var(--gold); font-size: 1rem; }
+  .rev__src { font-size: .72rem; color: #5f5f5f; letter-spacing: .08em; text-transform: uppercase; }
+
+  /* Баннер */
+  .banner {
+    position: relative; padding: clamp(3.5rem, 8vw, 6rem) 0; text-align: center; overflow: hidden;
+    border-block: 1px solid var(--line-g);
+    background:
+      radial-gradient(60% 120% at 50% 50%, rgba(201,168,76,.13), transparent 70%),
+      #0c0c0c;
+  }
+  .banner::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(45deg, rgba(0,0,0,.35) 0 1px, transparent 1px 7px);
+    opacity: .5;
+  }
+  .banner p {
+    position: relative; font-family: var(--display);
+    font-size: clamp(1.8rem, 5.5vw, 4rem); letter-spacing: .1em; line-height: 1.05;
+    text-wrap: balance; padding-inline: 1rem;
+  }
+  .banner p em { font-style: normal; color: var(--gold); }
+
+  /* Контакты */
+  #contacts { background: #080808; }
+  .contacts { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 3.5rem); align-items: start; }
+  .c-list { display: flex; flex-direction: column; gap: .1rem; margin: 1.8rem 0 0; }
+  .c-item {
+    display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 0;
+    border-bottom: 1px solid var(--line); color: #b8b8b8; font-size: .98rem;
+  }
+  .c-item:last-child { border-bottom: 0; }
+  .c-item svg { color: var(--gold); flex: none; margin-top: 3px; }
+  .c-item small { display: block; color: #6d6d6d; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 2px; }
+  .c-item a { transition: color .2s; }
+  .c-item a:hover { color: var(--gold); }
+  .contacts .btn { width: 100%; margin-top: 1.4rem; padding-block: 1.05rem; }
+  .map {
+    border: 1px solid var(--line-g); aspect-ratio: 4 / 3.4; background: #101010; overflow: hidden;
+  }
+  .map iframe { width: 100%; height: 100%; border: 0; display: block; filter: grayscale(.25) contrast(1.05); }
+
+  /* Подвал */
+  footer { border-top: 1px solid var(--line-g); padding: 2.4rem 0; background: var(--bg); }
+  .foot { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; justify-content: space-between; }
+  .foot__brand { font-family: var(--display); font-size: 1.9rem; letter-spacing: .24em; }
+  .foot__brand span { color: var(--gold); }
+  .foot__links { display: flex; gap: 1.2rem; flex-wrap: wrap; color: var(--gray); font-size: .85rem; }
+  .foot__links a:hover { color: var(--gold); }
+  .foot__copy { color: #5c5c5c; font-size: .78rem; letter-spacing: .06em; line-height: 1.5; }
+  .foot__credit { color: #474747; font-size: .72rem; letter-spacing: .02em; }
+
+  /* Мобильная панель */
+  .mobile-bar {
+    display: none; position: fixed; inset-inline: 0; bottom: 0; z-index: 150;
+    gap: .6rem; padding: .6rem clamp(12px, 4vw, 20px) calc(.6rem + env(safe-area-inset-bottom, 0px));
+    background: rgba(10,10,10,.94); backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px); border-top: 1px solid var(--line-g);
+  }
+  .mobile-bar .btn { flex: 1; font-size: .95rem; padding-block: .85rem; }
+
+  /* Анимации появления */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .75s cubic-bezier(.22,.61,.36,1), transform .75s cubic-bezier(.22,.61,.36,1); transition-delay: var(--d, 0ms); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .marquee__track { animation: none; }
+    .status.open i { animation: none; }
+  }
+
+  /* ---------- Адаптив ---------- */
+  @media (max-width: 1024px) {
+    .services { grid-template-columns: repeat(2, 1fr); }
+    .rev-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 860px) {
+    .about { grid-template-columns: 1fr; }
+    .about__visual { aspect-ratio: 16 / 10; order: -1; }
+    .contacts { grid-template-columns: 1fr; }
+    .nav__links { display: none; }
+    .nav .btn { display: none; }
+    .burger { display: flex; }
+  }
+  @media (max-width: 720px) {
+    body { padding-bottom: 84px; }
+    .services { grid-template-columns: 1fr; }
+    .rev-grid { grid-template-columns: 1fr; }
+    .perks { grid-template-columns: 1fr; }
+    .mobile-bar { display: flex; }
+    .hero { min-height: auto; padding: 100px 0 56px; }
+    .hero__meta { gap: .9rem 1.2rem; font-size: .8rem; }
+    .hero__actions .btn { flex: 1 1 100%; }
+    .map { aspect-ratio: 4 / 3.4; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap nav__inner">
+    <a href="#hero" class="nav__logo">БАЗ<span>А</span></a>
+    <ul class="nav__links">
+      <li><a href="#about">О нас</a></li>
+      <li><a href="#services">Услуги</a></li>
+      <li><a href="#reviews">Отзывы</a></li>
+      <li><a href="#contacts">Контакты</a></li>
+    </ul>
+    <a class="btn" href="https://n1817634.yclients.com/company/1613202/personal/menu?o=" target="_blank" rel="noopener">Записаться</a>
+    <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mob-nav" id="mobNav">
+  <a href="#about" data-close>О нас</a>
+  <a href="#services" data-close>Услуги</a>
+  <a href="#reviews" data-close>Отзывы</a>
+  <a href="#contacts" data-close>Контакты</a>
+  <a class="btn" href="https://n1817634.yclients.com/company/1613202/personal/menu?o=" target="_blank" rel="noopener" data-close>Записаться</a>
+</div>
+
+<!-- ================= ГЕРОЙ ================= -->
+<section class="hero" id="hero">
+  <div class="hero__photo" aria-hidden="true"></div>
+  <div class="wrap hero__inner">
+    <h1 class="hero__mark">БАЗ<em>А</em></h1>
+    <div class="hero__rule" aria-hidden="true"></div>
+    <p class="hero__tag">Мужской барбершоп в Воронеже</p>
+    <p class="hero__sub">Точные стрижки, чистые переходы, атмосфера без суеты. Приходи один раз — останешься навсегда.</p>
+    <div class="hero__actions">
+      <a class="btn" href="https://n1817634.yclients.com/company/1613202/personal/menu?o=" target="_blank" rel="noopener">Записаться онлайн</a>
+      <a class="btn btn--ghost" href="#services">Услуги и цены</a>
+    </div>
+    <div class="hero__meta">
+      <span class="status" id="status"><i aria-hidden="true"></i><span id="statusText">Ежедневно 10:00–22:00</span></span>
+      <span>Кольцовская, 24 · лит. З</span>
+      <span><a href="tel:+79529540707">+7 (952) 954-07-07</a></span>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <div class="marquee__group">
+      <span>Стрижка от 1 500 ₽</span><span>Фейд 1 200 ₽</span><span>Борода от 900 ₽</span>
+      <span>Ежедневно 10:00–22:00</span><span>Парковка</span><span>Онлайн-запись</span>
+    </div>
+    <div class="marquee__group">
+      <span>Стрижка от 1 500 ₽</span><span>Фейд 1 200 ₽</span><span>Борода от 900 ₽</span>
+      <span>Ежедневно 10:00–22:00</span><span>Парковка</span><span>Онлайн-запись</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= О НАС ================= -->
+<section id="about">
+  <div class="wrap">
+    <div class="about">
+      <div>
+        <div class="sec-head sec-head--left">
+          <span class="eyebrow">О нас</span>
+          <h2>Место, где результат<br>говорит сам за себя</h2>
+        </div>
+        <p class="about__text reveal">
+          <strong>БАЗА</strong> — мужской барбершоп на Кольцовской. Точные стрижки, чистые переходы,
+          никакой спешки. Мы работаем с формой головы, плотностью волос и характером —
+          поэтому результат держится до следующего визита.
+        </p>
+        <div class="perks reveal" style="--d:80ms">
+          <div class="perk">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 17h14M7 17V9l2-4h6l2 4v8"/><circle cx="8" cy="17" r="2"/><circle cx="16" cy="17" r="2"/></svg>
+            Парковка
+          </div>
+          <div class="perk">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 9a12 12 0 0 1 18 0M6 13a8 8 0 0 1 12 0M9.5 16.5a3 3 0 0 1 5 0"/><circle cx="12" cy="20" r="1"/></svg>
+            Wi-Fi
+          </div>
+          <div class="perk">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17l4-7h4l3 7M9 10l-1-3h3"/></svg>
+            Велопарковка
+          </div>
+          <div class="perk">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="10" r="1.5"/><circle cx="12" cy="8" r="1.5"/><circle cx="17" cy="10" r="1.5"/><path d="M5 15c1.5 3 4 4 7 4s5.5-1 7-4"/><path d="M4 10c0-4 3.5-6 8-6s8 2 8 6"/></svg>
+            Можно с питомцем
+          </div>
+        </div>
+      </div>
+      <div class="about__visual reveal" style="--d:120ms">
+        <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Barbershop_6815.jpg/1280px-Barbershop_6815.jpg"
+             alt="Барбершоп БАЗА — зал" loading="lazy">
+        <span>Кольцовская<br>24</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= УСЛУГИ ================= -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Услуги и цены</span>
+      <h2>Что и сколько</h2>
+      <p>Цены финальные — без доплат за мытьё и укладку. Шеф-барбер — мастер с расширенным опытом.</p>
+    </div>
+
+    <div class="services" id="servicesGrid"><!-- рендерится из JS --></div>
+  </div>
+</section>
+
+<!-- ================= ОТЗЫВЫ ================= -->
+<section id="reviews" class="reviews">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Отзывы</span>
+      <h2>Что говорят клиенты</h2>
+    </div>
+    <div class="rev-grid" id="reviewsGrid"><!-- рендерится из JS --></div>
+  </div>
+</section>
+
+<!-- ================= БАННЕР ================= -->
+<section class="banner">
+  <div class="wrap">
+    <p class="reveal">Ты уже знаешь,<br>что <em>вернёшься</em></p>
+  </div>
+</section>
+
+<!-- ================= КОНТАКТЫ ================= -->
+<section id="contacts">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Контакты</span>
+      <h2>Как нас найти</h2>
+    </div>
+    <div class="contacts">
+      <div class="reveal">
+        <div class="c-list">
+          <div class="c-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <div><small>Адрес</small>Воронеж, Кольцовская ул., 24, лит. З</div>
+          </div>
+          <div class="c-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+            <div><small>Часы работы</small>Ежедневно 10:00 – 22:00</div>
+          </div>
+          <div class="c-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h3l2 5-2 1a11 11 0 0 0 6 6l1-2 5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+            <div><small>Телефон</small><a href="tel:+79529540707">+7 (952) 954-07-07</a></div>
+          </div>
+          <div class="c-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 4L3 11l6 2 2 6 3-4 5 3z"/></svg>
+            <div><small>Telegram</small><a href="https://t.me/BAZA243" target="_blank" rel="noopener">@BAZA243</a></div>
+          </div>
+        </div>
+        <a class="btn" href="https://n1817634.yclients.com/company/1613202/personal/menu?o=" target="_blank" rel="noopener">Записаться онлайн</a>
+      </div>
+      <div class="map reveal" style="--d:100ms">
+        <iframe
+          src="https://yandex.ru/map-widget/v1/?ll=39.1891%2C51.6714&z=16&pt=39.1891%2C51.6714,pm2rdm"
+          title="Барбершоп БАЗА на карте"
+          loading="lazy" allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div class="foot__brand">БАЗ<span>А</span></div>
+    <div class="foot__links">
+      <a href="tel:+79529540707">+7 (952) 954-07-07</a>
+      <a href="https://t.me/BAZA243" target="_blank" rel="noopener">Telegram</a>
+      <a href="#services">Услуги</a>
+      <a href="#contacts">Контакты</a>
+    </div>
+    <div class="foot__copy">
+      © 2026 Барбершоп БАЗА · Воронеж<br>
+      <span class="foot__credit">Фото-заглушки: Wikimedia Commons (CC BY-SA 4.0) — будут заменены на снимки салона</span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-bar">
+  <a class="btn btn--ghost" href="tel:+79529540707">Позвонить</a>
+  <a class="btn" href="https://n1817634.yclients.com/company/1613202/personal/menu?o=" target="_blank" rel="noopener">Записаться</a>
+</div>
+
+<script>
+/* ================= Данные ================= */
+const BOOK = "https://n1817634.yclients.com/company/1613202/personal/menu?o=";
+
+/* Стоковые фото (Wikimedia Commons, CC BY-SA 4.0) — для показа клиенту.
+   Замените на реальные фото салона: просто поменяйте ссылки ниже. */
+const PHOTOS = [
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a9/The_Spot_Barbershop.jpg/1280px-The_Spot_Barbershop.jpg",
+  "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Barbershop_6815.jpg/1280px-Barbershop_6815.jpg",
+];
+
+const SERVICES = [
+  { name: "Мужская стрижка", photo: 0, rows: [["Барбер", "1 500 ₽"], ["Шеф-барбер", "2 500 ₽", true]] },
+  { name: "Стрижка машинкой", photo: 1, rows: [["Барбер", "1 000 ₽"], ["Шеф-барбер", "1 100 ₽"]] },
+  { name: "Фейд", photo: 0, rows: [["Барбер", "1 200 ₽"], ["Шеф-барбер", "1 600 ₽"]] },
+  { name: "Детская стрижка до 7 лет", photo: 1, rows: [["Барбер", "1 400 ₽"], ["Шеф-барбер", "2 000 ₽"]] },
+  { name: "Коррекция бороды и усов", photo: 0, rows: [["Барбер", "900 ₽"], ["Шеф-барбер", "1 000 ₽"]] },
+  { name: "Моделирование бороды", photo: 1, rows: [["Барбер", "1 200 ₽"], ["Шеф-барбер", "1 400 ₽"]] },
+  { name: "Коррекция окантовки", photo: 0, rows: [["Барбер", "1 200 ₽"], ["Шеф-барбер", "1 600 ₽"]] },
+];
+
+const REVIEWS = [
+  { text: "Барберу Заямиру отдельный респект — мастерски выполнил стрижку и подправил бороду, создал расслабленную атмосферу. Результат превзошёл все ожидания.", name: "Александр Лопатин" },
+  { text: "Вышел как с обложки GQ! Мастер Шах — волшебник, руки золотые. Стрижка отличная, атмосфера затягивает. Теперь я тут постоянный клиент.", name: "Андрей Лозхин" },
+  { text: "Стригусь у Шаха — всегда стабильно на высшем уровне. Место чистое, новый ремонт, есть парковка. Приятное заведение, советую!", name: "Илья Пухонин" },
+  { text: "Барбершоп-топ. Переходы супер, всё аккуратно и деликатно. Форма головы не уехала — а с моими волосами это непросто.", name: "Кирилл В." },
+  { text: "Заямир виртуозно чувствует, какой образ нужен клиенту. Стрижка безупречна, каждая деталь на месте. Теперь это мой единственный барбершоп.", name: "Abdullo Sanginov" },
+  { text: "Ребята профессионалы, атмосфера на высшем уровне. На входе и выходе предложили кофе. Мастер Шах подстриг строго по моим желаниям.", name: "ec1yps_" },
+  { text: "Сын с непростыми волосами — мастер Шах справился на 5+. Переходы плавные, все пожелания услышаны. Очень довольны качеством!", name: "Екатерина К." },
+];
+
+/* ================= Рендер услуг ================= */
+document.getElementById("servicesGrid").innerHTML = SERVICES.map((s, i) => `
+  <article class="svc reveal" style="--d:${(i % 3) * 70}ms">
+    <div class="svc__top">
+      <img src="${PHOTOS[s.photo] || ""}" alt="${s.name}" loading="lazy">
+      <div class="svc__num">${String(i + 1).padStart(2, "0")}</div>
+    </div>
+    <div class="svc__body">
+      <h3 class="svc__name">${s.name}</h3>
+      ${s.rows.map(([label, price, vip]) => `
+        <div class="row">
+          <span class="row__label">${label}${vip ? ' <span class="vip">VIP</span>' : ""}</span>
+          <span class="row__price">${price}</span>
+        </div>`).join("")}
+      <a class="svc__cta" href="${BOOK}" target="_blank" rel="noopener">Записаться →</a>
+    </div>
+  </article>`).join("");
+
+/* ================= Рендер отзывов ================= */
+document.getElementById("reviewsGrid").innerHTML = REVIEWS.map((r, i) => `
+  <article class="rev reveal" style="--d:${(i % 3) * 70}ms">
+    <div class="rev__stars" aria-label="5 из 5">★★★★★</div>
+    <p class="rev__text">«${r.text}»</p>
+    <div class="rev__name">${r.name}</div>
+    <div class="rev__src">Яндекс.Карты</div>
+  </article>`).join("");
+
+/* ================= Статус открыто/закрыто ================= */
+(function () {
+  const box = document.getElementById("status");
+  const text = document.getElementById("statusText");
+  const msk = new Date(Date.now() + (new Date().getTimezoneOffset() + 180) * 60000);
+  const h = msk.getHours();
+  const open = h >= 10 && h < 22;
+  box.classList.add(open ? "open" : "closed");
+  text.textContent = open ? "Сейчас открыто · до 22:00" : "Сейчас закрыто · откроемся в 10:00";
+})();
+
+/* ================= Шапка при скролле ================= */
+const nav = document.getElementById("nav");
+const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 10);
+onScroll();
+window.addEventListener("scroll", onScroll, { passive: true });
+
+/* ================= Мобильное меню ================= */
+const burger = document.getElementById("burger");
+const mobNav = document.getElementById("mobNav");
+const closeMob = () => {
+  mobNav.classList.remove("open");
+  burger.classList.remove("open");
+  burger.setAttribute("aria-expanded", "false");
+  document.body.style.overflow = "";
+};
+burger.addEventListener("click", () => {
+  const open = mobNav.classList.toggle("open");
+  burger.classList.toggle("open", open);
+  burger.setAttribute("aria-expanded", String(open));
+  document.body.style.overflow = open ? "hidden" : "";
+});
+mobNav.querySelectorAll("[data-close]").forEach(el => el.addEventListener("click", closeMob));
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeMob(); });
+
+/* ================= Появление секций ================= */
+(function () {
+  const els = document.querySelectorAll(".reveal");
+  if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    els.forEach(el => el.classList.add("in"));
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add("in");
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+  els.forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
