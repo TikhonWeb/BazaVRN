@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>БАЗА — барбершоп в Воронеже | Кольцовская, 24, лит. З</title>
+<meta name="description" content="БАЗА — мужской барбершоп в Воронеже. Точные стрижки, фейд, борода. Ежедневно 10:00–22:00. Кольцовская, 24, лит. З. Онлайн-запись.">
+<meta property="og:title" content="БАЗА — барбершоп в Воронеже">
+<meta property="og:description" content="Точные стрижки, чистые переходы. Кольцовская, 24, лит. З. Ежедневно 10:00–22:00.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" type="image/png" href="img/logo-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --void:      #0A0A0A;
+    --coal:      #121212;
+    --graphite:  #191919;
+    --gold:      #C5A059;
+    --gold-lit:  #D4AF37;
+    --gold-soft: #E2CB96;
+    --gold-deep: #8E6F35;
+    --cream:     #EDE6D6;
+    --dim:       #978F82;   /* #7A7368 давал 4.22:1 — ниже WCAG AA */
+    --dim-soft:  #7A7368;
+    --hair:      rgba(197, 160, 89, 0.18);
+    --hair-line: rgba(255, 255, 255, 0.07);
+
+    --serif: "Cormorant Garamond", Georgia, serif;
+    --sans:  "Inter", system-ui, sans-serif;
+
+    --ease: cubic-bezier(.22, .61, .36, 1);
+    --gutter: clamp(16px, 4vw, 48px);
+  }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--void);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+  ::selection { background: var(--gold); color: var(--void); }
+  :focus-visible { outline: 1px solid var(--gold-lit); outline-offset: 4px; }
+
+  .wrap { max-width: 1180px; margin-inline: auto; padding-inline: var(--gutter); }
+
+  /* ── Типографика ───────────────────────────────────── */
+  .kicker {
+    font-family: var(--sans);
+    font-size: .64rem;
+    font-weight: 400;
+    letter-spacing: .34em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .kicker::before,
+  .kicker::after {
+    content: "";
+    width: 34px;
+    height: 1px;
+    background: var(--gold);
+    opacity: .5;
+    flex: none;
+  }
+  .kicker--left::before { display: none; }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(2rem, 5.2vw, 3.6rem);
+    line-height: 1.08;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+  h2 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: .06em;
+  }
+
+  .lede {
+    color: var(--dim);
+    font-size: .95rem;
+    line-height: 1.8;
+    max-width: 54ch;
+  }
+
+  /* ── Кнопки: контурные, с засечками ────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .7rem;
+    font-family: var(--sans);
+    font-size: 1.02rem;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 1.1rem 2.3rem;
+    border: 1px solid var(--gold);
+    color: var(--gold-soft);
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+    transition: color .3s var(--ease), border-color .3s var(--ease);
+    isolation: isolate;
+  }
+  .btn > span { position: relative; z-index: 1; }
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: var(--gold);
+    transform: translateY(101%);
+    transition: transform .35s var(--ease);
+  }
+  .btn:hover { color: var(--void); border-color: var(--gold-lit); }
+  .btn:hover::before { transform: translateY(0); }
+  .btn--solid { background: var(--gold); color: var(--void); }
+  .btn--solid::before { background: var(--gold-lit); }
+  .btn--solid:hover { color: var(--void); }
+
+  /* ── Шапка ─────────────────────────────────────────── */
+  .top {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 200;
+    transition: background .4s, border-color .4s;
+    border-bottom: 1px solid transparent;
+  }
+  .top.is-solid {
+    background: rgba(10, 10, 10, .92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom-color: var(--hair);
+  }
+  .top__in {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2.4rem);
+    height: 76px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+    line-height: 1;
+    padding-block: .2rem;
+  }
+  .brand img {
+    display: block;
+    height: 34px;
+    width: auto;
+  }
+  @media (max-width: 760px) {
+    .brand img { height: 28px; }
+  }
+  .brand em { font-style: normal; color: var(--gold); }
+  .top__nav {
+    display: flex;
+    gap: clamp(1rem, 2.4vw, 2rem);
+    margin-inline-start: auto;
+    font-size: .66rem;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+  .top__nav a {
+    color: var(--dim);
+    padding-block: .4rem;
+    position: relative;
+    transition: color .3s;
+  }
+  .top__nav a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: translateX(-50%);
+    transition: width .35s var(--ease);
+  }
+  .top__nav a:hover { color: var(--cream); }
+  .top__nav a:hover::after { width: 100%; }
+  .top .btn { padding: .78rem 1.6rem; font-size: .86rem; letter-spacing: .12em; }
+
+  .burger {
+    display: none;
+    width: 44px;
+    height: 44px;
+    margin-inline-start: auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .burger span {
+    width: 22px;
+    height: 1px;
+    background: var(--gold);
+    transition: transform .3s var(--ease), opacity .2s;
+  }
+  .burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 190;
+    background: var(--void);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    clip-path: inset(0 0 100% 0);
+    visibility: hidden;
+    transition: clip-path .5s var(--ease), visibility 0s linear .5s;
+  }
+  .drawer.is-open {
+    clip-path: inset(0 0 0 0);
+    visibility: visible;
+    transition: clip-path .5s var(--ease), visibility 0s;
+  }
+  .drawer__close {
+    position: absolute;
+    top: max(1rem, env(safe-area-inset-top, 0px));
+    right: var(--gutter);
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    color: var(--gold);
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+  .drawer a {
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--dim);
+    transition: color .2s;
+  }
+  .drawer a:hover,
+  .drawer .btn { color: var(--gold); }
+
+  /* ── Герой ─────────────────────────────────────────── */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 120px 0 72px;
+    overflow: hidden;
+  }
+
+  /* Свет: три прожектора, как в студии */
+  .hero__light {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 46% 52% at 50% 34%, rgba(197, 160, 89, .16), transparent 70%),
+      radial-gradient(ellipse 82% 46% at 50% 108%, rgba(197, 160, 89, .07), transparent 62%),
+      radial-gradient(ellipse 66% 38% at 50% -6%, rgba(255, 255, 255, .045), transparent 66%);
+  }
+
+  /* Тонкая фактура «кожи» */
+  .hero__grain {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: .5;
+    background-image: repeating-linear-gradient(
+      115deg,
+      rgba(197, 160, 89, .035) 0 1px,
+      transparent 1px 9px
+    );
+    -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 42%, #000, transparent 78%);
+    mask-image: radial-gradient(ellipse 60% 55% at 50% 42%, #000, transparent 78%);
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1.4rem, 3vw, 2rem);
+  }
+
+
+  /* ── Витрина героя ───────────────────────────────────
+     Одна фигура: медведь. Параллакс от курсора через --px / --py. */
+  .vitrine {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .piece {
+    position: absolute;
+    transform:
+      translate3d(calc(var(--px, 0) * var(--depth, 1) * 1px),
+                  calc(var(--py, 0) * var(--depth, 1) * 1px), 0);
+    transition: transform .9s cubic-bezier(.16, .84, .44, 1);
+    will-change: transform;
+  }
+
+  /* Фигура плавает на своей оси — отдельно от параллакса */
+  .piece img {
+    display: block;
+    width: 84px;
+    height: auto;
+    animation: drift 9s ease-in-out infinite;
+  }
+
+  @keyframes drift {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-9px); }
+  }
+
+  /* Мягкая золотая тень под фигурой */
+  .piece::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    width: 64%;
+    height: 8px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(197, 160, 89, .32), transparent 72%);
+    filter: blur(4px);
+  }
+
+  .piece--bear { left: 5%; top: 26%; --depth: 1.6; }
+
+  .hero__brand {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(4.4rem, 21vw, 15rem);
+    line-height: .82;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    padding-inline-start: .18em;
+    margin-block-end: .1em;
+    background: linear-gradient(180deg, var(--cream) 0%, var(--gold-soft) 52%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero__rule {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    width: min(340px, 70vw);
+    color: var(--gold);
+  }
+  .hero__rule::before,
+  .hero__rule::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .hero__rule::after { background: linear-gradient(90deg, var(--gold), transparent); }
+  .hero__diamond {
+    width: 5px;
+    height: 5px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex: none;
+  }
+
+  .hero__tag {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(.95rem, 2vw, 1.22rem);
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .hero__sub {
+    color: var(--dim);
+    font-size: .95rem;
+    line-height: 1.8;
+    max-width: 46ch;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+    margin-block-start: .6rem;
+  }
+
+  /* Вторая ссылка — текстовая, а не вторая кнопка: один доминирующий CTA */
+  .hero__link {
+    font-size: .8rem;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--cream);
+    border-bottom: 1px solid var(--gold);
+    padding-block-end: .3rem;
+    transition: color .2s, border-color .2s;
+  }
+  .hero__link:hover { color: var(--gold); border-bottom-color: var(--gold-lit); }
+
+  .hero__meta {
+    display: flex;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-block-start: .8rem;
+    font-size: .72rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .hero__meta a:hover { color: var(--gold); }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+  }
+  .status i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--dim);
+    flex: none;
+  }
+  .status.is-open { color: var(--cream); }
+  .status.is-open i {
+    background: var(--gold-lit);
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, .55);
+    animation: shimmer 2.6s infinite;
+  }
+  @keyframes shimmer {
+    0%   { box-shadow: 0 0 0 0 rgba(212, 175, 55, .5); }
+    70%  { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+  }
+
+  /* Уголки-рамка */
+  .hero__corners {
+    position: absolute;
+    inset: clamp(80px, 11vw, 104px) clamp(14px, 3vw, 38px) 26px;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero__corners span {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--hair);
+  }
+  .hero__corners span:nth-child(1) { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+  .hero__corners span:nth-child(2) { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+  .hero__corners span:nth-child(3) { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+  .hero__corners span:nth-child(4) { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+  /* ── Бегущая строка ────────────────────────────────── */
+  .strip {
+    border-block: 1px solid var(--hair);
+    background: linear-gradient(180deg, rgba(197, 160, 89, .05), transparent);
+    overflow: hidden;
+  }
+  .strip__track {
+    display: flex;
+    width: max-content;
+    animation: glide 42s linear infinite;
+  }
+  .strip:hover .strip__track { animation-play-state: paused; }
+  .strip__set { display: flex; flex: none; }
+  .strip__set span {
+    font-family: var(--serif);
+    font-size: .82rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--dim);
+    padding: .95rem 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    white-space: nowrap;
+  }
+  .strip__set span::after {
+    content: "";
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    opacity: .7;
+  }
+  @keyframes glide { to { transform: translateX(-50%); } }
+
+  /* ── Секции ────────────────────────────────────────── */
+  section { padding-block: clamp(64px, 10vw, 128px); }
+
+  .head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+    text-align: center;
+    margin-block-end: clamp(2.2rem, 5vw, 3.6rem);
+  }
+  .head--left { align-items: flex-start; text-align: start; }
+
+  /* ── О нас ─────────────────────────────────────────── */
+  .about {
+    display: grid;
+    grid-template-columns: minmax(0, 1.04fr) minmax(0, .96fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+  .about__text {
+    color: var(--dim);
+    font-size: .96rem;
+    line-height: 1.9;
+    margin-block: 1.4rem 2rem;
+  }
+  .about__text strong { color: var(--cream); font-weight: 400; }
+
+  /* Рейтинг из карточки: цифра крупно, источник мелко */
+  .rating {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    padding-block: 1.2rem;
+    margin-block-end: 1.6rem;
+    border-block: 1px solid var(--hair-line);
+  }
+  .rating__value {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 5vw, 3.2rem);
+    font-weight: 300;
+    line-height: .9;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+  }
+  .rating__meta {
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+    font-size: .62rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .rating__meta strong { color: var(--cream); font-weight: 400; }
+
+  .amenities {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--hair-line);
+  }
+  .amenity {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    padding: .95rem 0;
+    border-bottom: 1px solid var(--hair-line);
+    font-size: .68rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+  .amenity:nth-child(odd) { padding-inline-end: 1rem; }
+  .amenity:nth-child(even) { padding-inline-start: 1rem; border-inline-start: 1px solid var(--hair-line); }
+  .amenity svg { color: var(--gold); flex: none; }
+
+  .portrait {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border: 1px solid var(--hair);
+  }
+  /* Фото уже чёрно-белое и затемнено при подготовке — повторный фильтр
+     съедал стрижку и глубину. Оставляем только едва заметный контраст. */
+  .portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* держим верх кадра: на мобиле рамка становится шире и срезала бы макушку */
+    object-position: 50% 0%;
+    filter: contrast(1.02) brightness(1);
+    transition: filter .7s var(--ease), transform .9s var(--ease);
+  }
+  .portrait:hover img { filter: contrast(1.04) brightness(1.06); transform: scale(1.02); }
+  .portrait::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(10, 10, 10, .86));
+    pointer-events: none;
+  }
+  .portrait__in {
+    position: absolute;
+    inset: 10px;
+    border: 1px solid rgba(197, 160, 89, .22);
+    pointer-events: none;
+  }
+  .portrait__cap {
+    position: absolute;
+    z-index: 2;
+    inset: auto 0 1.6rem;
+    text-align: center;
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    letter-spacing: .34em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* ── Прайс: услуга × роль мастера ──────────────────── */
+  .board {
+    border-top: 1px solid var(--hair);
+    display: flex;
+    flex-direction: column;
+  }
+  .dish {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: .35rem 1.4rem;
+    align-items: baseline;
+    padding-block: clamp(1.05rem, 2.4vw, 1.45rem);
+    border-bottom: 1px solid var(--hair-line);
+  }
+  .dish__name {
+    font-family: var(--serif);
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    font-weight: 400;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+  .dish__meta {
+    grid-column: 1;
+    font-size: .66rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .dish__price {
+    font-family: var(--serif);
+    font-size: clamp(1rem, 2.2vw, 1.26rem);
+    letter-spacing: .05em;
+    color: var(--gold);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    min-width: 5.5em;
+  }
+  .dish__price small {
+    display: block;
+    font-family: var(--sans);
+    font-size: .56rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-block-start: .15rem;
+  }
+  .dish--vip .dish__price { color: var(--gold-soft); }
+
+  .board__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 1.4rem;
+    padding-block: .8rem;
+    border-bottom: 1px solid var(--hair);
+    font-size: .56rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .board__head span:nth-child(2),
+  .board__head span:nth-child(3) { text-align: right; min-width: 5.5em; }
+
+  @media (max-width: 640px) {
+    .board__head { display: none; }
+    .dish { grid-template-columns: minmax(0, 1fr) auto; }
+    .dish__price { min-width: 0; }
+    .dish__price--barber { color: var(--gold); }
+    .dish__meta::after { content: " · барбер / шеф"; }
+  }
+
+  /* ── Работы: стрижка крупно, интерьер и фасад сбоку ── */
+  .works { border-top: 1px solid var(--hair); }
+  .gallery {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: clamp(6px, 1.2vw, 12px);
+  }
+  .shot {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--hair-line);
+    min-height: 0;
+  }
+  /* Вертикальная стрижка занимает два ряда */
+  .shot:nth-child(1) { grid-row: 1 / 3; }
+  .shot img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    /* якорь сверху: при обрезке теряется низ кадра, а не макушка */
+    object-position: 50% 0%;
+    filter: grayscale(.45) contrast(1.05) brightness(.92);
+    transition: filter .5s var(--ease), transform .7s var(--ease);
+  }
+  /* Слот 1 тянется на два ряда — картинка заполняет его целиком,
+     а не живёт в собственной пропорции внутри рамки */
+  .shot:nth-child(1) img { aspect-ratio: auto; }
+  .shot:nth-child(2) img { aspect-ratio: 4 / 3; object-position: 50% 0%; }
+  .shot:nth-child(3) img { aspect-ratio: 1 / 1; object-position: 50% 0%; }
+  .shot:hover img { filter: grayscale(0) contrast(1.02) brightness(1); transform: scale(1.02); }
+
+  @media (max-width: 760px) {
+    .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .shot:nth-child(1) { grid-row: auto; grid-column: span 2; }
+    .shot:nth-child(1) img { aspect-ratio: 4 / 3; object-position: 50% 0%; }
+    .shot:nth-child(2) img,
+    .shot:nth-child(3) img { aspect-ratio: 1 / 1; }
+  }
+
+  /* ── Отзывы ────────────────────────────────────────── */
+  .voices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--hair-line);
+    border: 1px solid var(--hair-line);
+  }
+  .voice {
+    background: var(--void);
+    padding: clamp(1.4rem, 3vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    transition: background .4s;
+  }
+  .voice:hover { background: var(--coal); }
+  /* Отзывы читаются глазами, а не разглядываются: прямой Inter вместо тонкого
+     курсива Cormorant — на тёмном фоне мелкий засечный шрифт разваливается */
+  .voice__text {
+    font-family: var(--sans);
+    font-size: 1.02rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.68;
+    letter-spacing: .002em;
+    color: #DCD5C7;
+    flex: 1;
+  }
+  /* Отметка источника стоит первой — так карточка читается как отзыв с площадки,
+     а не как выдуманный отзыв со звёздами */
+  .voice__name {
+    font-size: .72rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .voice__src {
+    font-size: .66rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #8C8478;   /* #4A453D давал 2.08:1 */
+  }
+  /* ── Баннер: фото зала на всю ширину ───────────────── */
+  .banner {
+    position: relative;
+    text-align: center;
+    padding-block: clamp(3.2rem, 8vw, 6rem);
+    border-block: 1px solid var(--hair);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .banner__img {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 38%;
+    filter: grayscale(.35) brightness(.42) contrast(1.08);
+  }
+  .banner__glow {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 52% 130% at 50% 50%, rgba(197, 160, 89, .16), transparent 68%),
+      linear-gradient(180deg, rgba(10,10,10,.55), rgba(10,10,10,.2) 45%, rgba(10,10,10,.7));
+  }
+  .banner p {
+    position: relative;
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(1.6rem, 5vw, 3.4rem);
+    line-height: 1.18;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    padding-inline: 1rem;
+  }
+  .banner em { font-style: italic; color: var(--gold); }
+
+  /* ── Контакты ──────────────────────────────────────── */
+  .contacts {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 3.6rem);
+    align-items: start;
+  }
+  .rows { display: flex; flex-direction: column; }
+  .row {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 1.05rem;
+    border-bottom: 1px solid var(--hair-line);
+    align-items: baseline;
+  }
+  .row:first-child { border-top: 1px solid var(--hair-line); }
+  .row__k {
+    font-size: .6rem;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .row__v { font-family: var(--serif); font-size: 1.02rem; letter-spacing: .04em; }
+  .row__v a { border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
+  .row__v a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+  .row__v small {
+    display: block;
+    font-family: var(--sans);
+    font-size: .72rem;
+    letter-spacing: .04em;
+    color: var(--dim);
+    margin-block-start: .15rem;
+  }
+
+  .map {
+    border: 1px solid var(--hair);
+    aspect-ratio: 4 / 3.6;
+    overflow: hidden;
+    background: var(--coal);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .map iframe { flex: 1; width: 100%; height: 100%; border: 0; filter: grayscale(.4) contrast(1.06) brightness(.86); }
+  .map__cap {
+    padding: .75rem 1rem;
+    border-top: 1px solid var(--hair-line);
+    font-size: .66rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--dim);
+  }
+  .map__cap a { transition: color .2s; }
+  .map__cap a:hover { color: var(--gold); }
+
+  /* ── Подвал ────────────────────────────────────────── */
+  .foot {
+    border-top: 1px solid var(--hair);
+    padding-block: 2.2rem 2.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.2rem 2rem;
+    flex-wrap: wrap;
+  }
+  .foot__brand { display: inline-flex; align-items: center; }
+  .foot__brand img { display: block; height: 28px; width: auto; opacity: .9; }
+  .foot__links {
+    display: flex;
+    gap: 1.4rem;
+    flex-wrap: wrap;
+    font-size: .62rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .foot__links a:hover { color: var(--gold); }
+  .foot__copy {
+    font-size: .6rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #8C8478;   /* #4A453D давал 2.08:1 */
+    text-align: end;
+    line-height: 1.8;
+  }
+
+  /* ── Мобильный док ─────────────────────────────────── */
+  /* Мобильный док: плотный фон вместо второго стеклянного слоя */
+  .dock {
+    display: none;
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 150;
+    background: var(--void);
+    border-top: 1px solid var(--hair);
+    padding: .5rem .6rem calc(.5rem + env(safe-area-inset-bottom, 0px));
+    gap: .5rem;
+  }
+  .dock a {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    padding-block: .95rem;
+    font-family: var(--sans);
+    font-size: .9rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .dock__call { border: 1px solid var(--hair); color: var(--cream); }
+  .dock__book { background: var(--gold); color: var(--void); }
+  /* ── Появление ─────────────────────────────────────── */
+  .rise {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity .28s var(--ease), transform .28s var(--ease);
+    transition-delay: var(--d, 0ms);
+  }
+  .rise.is-in { opacity: 1; transform: none; }
+
+  /* Отзывы: три настоящих — первый крупно на всю ширину, два под ним */
+  @media (min-width: 760px) {
+    .voices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .voice:first-child { grid-column: span 2; }
+    .voice:first-child .voice__text { font-size: 1.18rem; line-height: 1.62; max-width: 66ch; }
+  }
+
+  /* ── Адаптив ───────────────────────────────────────── */
+  @media (max-width: 980px) {
+    .about { grid-template-columns: 1fr; }
+    .portrait { aspect-ratio: 16 / 11; order: -1; }
+    .contacts { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 760px) {
+    body { padding-block-end: 68px; }
+    .top__nav,
+    .top .btn { display: none; }
+    .burger { display: flex; }
+    .dock { display: flex; }
+
+    section { padding-block: clamp(48px, 12vw, 72px); }
+    section { padding-block: clamp(48px, 12vw, 72px); }
+    .hero { min-height: auto; padding: 104px 0 52px; }
+    .hero__brand { font-size: clamp(3.6rem, 22vw, 7rem); letter-spacing: .14em; }
+    .hero__tag { letter-spacing: .2em; font-size: .82rem; }
+    .hero__sub { font-size: .92rem; letter-spacing: .03em; }
+    .hero__actions { flex-direction: column; }
+    .hero__actions .btn { width: 100%; }
+    .hero__meta { gap: .7rem 1.1rem; font-size: .64rem; }
+    .hero__corners { display: none; }
+
+    /* Медведь на мобильных ближе к краю и меньше размером */
+    .piece--bear { left: 3%; top: 13%; --depth: 1.6; }
+    .piece--bear img { width: 58px; }
+    .vitrine { opacity: .85; }
+
+    h2 { letter-spacing: .07em; }
+    .amenities { grid-template-columns: 1fr; }
+    .amenity:nth-child(even) { padding-inline-start: 0; border-inline-start: 0; }
+    .amenity:nth-child(odd) { padding-inline-end: 0; }
+
+    .row { grid-template-columns: 1fr; gap: .3rem; }
+    .voices { grid-template-columns: 1fr; }
+    .map { aspect-ratio: 4 / 3.2; }
+    .foot { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .foot__copy { text-align: start; }
+  }
+
+  @media (max-width: 390px) {
+    .hero__brand { font-size: 3.1rem; }
+    .dish__name { font-size: .95rem; }
+    .dish__price { font-size: .92rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .strip__track { animation: none; }
+    .status.is-open i { animation: none; }
+    .drawer { transition: none; }
+    .rise { opacity: 1; transform: none; transition: none; }
+    .btn::before { display: none; }
+    .btn:hover { color: var(--gold); }
+    .btn--solid:hover { color: var(--void); }
+    .portrait img { transition: none; }
+    .portrait:hover img { transform: none; }
+    .piece { transform: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap top__in">
+    <a href="#hero" class="brand" aria-label="БАЗА — на главную"><img src="img/logo-gold.webp" width="392" height="196" alt="БАЗА"></a>
+    <nav class="top__nav" aria-label="Основная навигация">
+      <a href="#about">О нас</a>
+      <a href="#services">Услуги</a>
+      <a href="#works">Работы</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a class="btn" href="https://n1817634.yclients.com/company/1613202/personal/menu?o=" target="_blank" rel="noopener"><span>Записаться</span></a>
+    <button class="burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="drawer" type="button">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Меню навигации">
+  <button class="drawer__close" id="drawerClose" aria-label="Закрыть меню" type="button">&times;</button>
+  <a href="#about" data-close>О нас</a>
+  <a href="#services" data-close>Услуги</a>
+  <a href="#works" data-close>Работы</a>
+  <a href="#reviews" data-close>Отзывы</a>
+  <a href="#contacts" data-close>Контакты</a>
+  <a class="btn" href="https://n1817634.yclients.com/company/1613202/personal/menu?o=" target="_blank" rel="noopener" data-close><span>Записаться</span></a>
+</div>
+
+<main>
+
+  <section class="hero" id="hero">
+    <div class="hero__light" aria-hidden="true"></div>
+    <div class="hero__grain" aria-hidden="true"></div>
+    <div class="hero__corners" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+    <div class="vitrine" id="vitrine" aria-hidden="true">
+      <div class="piece piece--bear">
+        <img src="img/bear.webp" width="207" height="256" alt="" decoding="async">
+      </div>
+    </div>
+
+    <div class="wrap hero__inner">
+      <p class="kicker">Воронеж · Кольцовская 24, лит. З</p>
+
+      <h1 class="hero__brand">БАЗ<em>А</em></h1>
+
+      <div class="hero__rule" aria-hidden="true">
+        <span class="hero__diamond"></span>
+      </div>
+
+      <p class="hero__tag">Мужской и детский барбершоп</p>
+      <p class="hero__sub">
+        Стрижки, фейд, борода. VIP-кабинет у шеф-барбера.
+        Рейтинг 5,0 на Яндекс.Картах — 68 отзывов.
+      </p>
+
+      <div class="hero__actions">
+        <a class="btn btn--solid" href="https://n1817634.yclients.com/company/1613202/personal/menu?o=" target="_blank" rel="noopener"><span>Записаться онлайн</span></a>
+        <a class="hero__link" href="#services">Услуги и цены<span aria-hidden="true"> →</span></a>
+      </div>
+
+      <div class="hero__meta">
+        <span class="status" id="status">
+          <i aria-hidden="true"></i>
+          <span id="statusText">Ежедневно 10:00–22:00</span>
+        </span>
+        <span>Кольцовская, 24 · лит. З</span>
+        <a href="tel:+79529540707">+7 (952) 954-07-07</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip" aria-hidden="true">
+    <div class="strip__track">
+      <div class="strip__set">
+        <span>Стрижка от 1 500 ₽</span><span>Фейд 1 200 ₽</span><span>Борода от 900 ₽</span>
+        <span>Ежедневно 10:00–22:00</span><span>Парковка</span><span>Онлайн-запись</span>
+      </div>
+      <div class="strip__set">
+        <span>Стрижка от 1 500 ₽</span><span>Фейд 1 200 ₽</span><span>Борода от 900 ₽</span>
+        <span>Ежедневно 10:00–22:00</span><span>Парковка</span><span>Онлайн-запись</span>
+      </div>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="about">
+        <div>
+          <div class="head head--left rise">
+            <span class="kicker kicker--left">О нас</span>
+            <h2>Место, где <em>результат</em><br>говорит сам за себя</h2>
+          </div>
+
+          <p class="about__text rise" style="--d:80ms">
+            <strong>БАЗА</strong> — барбершоп на Кольцовской, 24 в Воронеже.
+            Мужские и детские стрижки, коррекция и моделирование бороды.
+            Стрижка у шеф-барбера проходит в VIP-кабинете. Оплата картой и наличными.
+          </p>
+
+          <div class="rating rise" style="--d:110ms">
+            <span class="rating__value">5,0</span>
+            <span class="rating__meta">
+              <strong>68 отзывов</strong>
+              <span>Яндекс.Карты · 78 оценок</span>
+            </span>
+          </div>
+
+          <div class="amenities rise" style="--d:140ms">
+            <div class="amenity">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 17h14M7 17V9l2-4h6l2 4v8"/><circle cx="8" cy="17" r="2"/><circle cx="16" cy="17" r="2"/></svg>
+              Парковка
+            </div>
+            <div class="amenity">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 9a12 12 0 0 1 18 0M6 13a8 8 0 0 1 12 0M9.5 16.5a3 3 0 0 1 5 0"/><circle cx="12" cy="20" r="1"/></svg>
+              Wi-Fi
+            </div>
+            <div class="amenity">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17l4-7h4l3 7M9 10l-1-3h3"/></svg>
+              Велопарковка
+            </div>
+            <div class="amenity">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="7" cy="10" r="1.5"/><circle cx="12" cy="8" r="1.5"/><circle cx="17" cy="10" r="1.5"/><path d="M5 15c1.5 3 4 4 7 4s5.5-1 7-4"/><path d="M4 10c0-4 3.5-6 8-6s8 2 8 6"/></svg>
+              С животными
+            </div>
+          </div>
+        </div>
+
+        <figure class="portrait rise" style="--d:120ms">
+          <img src="img/salon.webp" width="900" height="1125"
+               alt="Стрижка в БАЗЕ на Кольцовской, 24" loading="lazy">
+          <span class="portrait__in" aria-hidden="true"></span>
+          <figcaption class="portrait__cap">Кольцовская 24, лит. З</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="head rise">
+        <span class="kicker">Услуги</span>
+        <h2>Прайс без <em>сюрпризов</em></h2>
+        <p class="lede">Одна цена для барбера и для шеф-барбера — две разные. Стрижка у шеф-барбера проходит в VIP-кабинете.</p>
+      </div>
+
+      <div class="board" id="servicesGrid"></div>
+    </div>
+  </section>
+
+  <section id="works" class="works">
+    <div class="wrap">
+      <div class="head head--left rise">
+        <span class="kicker kicker--left">Работы</span>
+        <h2>Как это <em>выглядит</em></h2>
+      </div>
+
+      <div class="gallery rise" style="--d:80ms">
+        <figure class="shot">
+          <img src="img/gallery-1.webp" width="800" height="1000" alt="Стрижка в БАЗЕ" loading="lazy" decoding="async">
+        </figure>
+        <figure class="shot">
+          <img src="img/gallery-2.webp" width="900" height="900" alt="Работа барбера в БАЗЕ" loading="lazy" decoding="async">
+        </figure>
+        <figure class="shot">
+          <img src="img/gallery-3.webp" width="800" height="1000" alt="Интерьер барбершопа БАЗА" loading="lazy" decoding="async">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <div class="wrap">
+      <div class="head rise">
+        <span class="kicker">Отзывы</span>
+        <h2>Что говорят <em>клиенты</em></h2>
+      </div>
+      <div class="voices" id="reviewsGrid"></div>
+    </div>
+  </section>
+
+  <section class="banner">
+    <img class="banner__img" src="img/banner.webp" width="1600" height="686" alt="" loading="lazy" decoding="async">
+    <div class="banner__glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="rise">Кольцовская, 24, лит. З<br>ежедневно <em>10:00–22:00</em></p>
+    </div>
+  </section>
+
+  <section id="contacts">
+    <div class="wrap">
+      <div class="head rise">
+        <span class="kicker">Контакты</span>
+        <h2>Как нас <em>найти</em></h2>
+      </div>
+
+      <div class="contacts">
+        <div class="rise">
+          <div class="rows">
+            <div class="row">
+              <span class="row__k">Адрес</span>
+              <span class="row__v">Кольцовская, 24, лит. З<small>Воронеж · парковка у входа</small></span>
+            </div>
+            <div class="row">
+              <span class="row__k">Часы</span>
+              <span class="row__v">Ежедневно 10:00 — 22:00</span>
+            </div>
+            <div class="row">
+              <span class="row__k">Телефон</span>
+              <span class="row__v"><a href="tel:+79529540707">+7 (952) 954-07-07</a></span>
+            </div>
+            <div class="row">
+              <span class="row__k">Telegram</span>
+              <span class="row__v"><a href="https://t.me/BAZA243" target="_blank" rel="noopener">@BAZA243</a></span>
+            </div>
+          </div>
+
+          <div style="margin-block-start:1.8rem">
+            <a class="btn btn--solid" style="width:100%" href="https://n1817634.yclients.com/company/1613202/personal/menu?o=" target="_blank" rel="noopener"><span>Записаться онлайн</span></a>
+          </div>
+        </div>
+
+        <figure class="map rise" style="--d:100ms">
+          <iframe
+            src="https://yandex.ru/map-widget/v1/?ll=39.1891%2C51.6714&z=16&pt=39.1891%2C51.6714,pm2rdm"
+            title="Барбершоп БАЗА на карте"
+            loading="lazy" allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <figcaption class="map__cap">
+            <a href="https://yandex.ru/maps/org/baza/4429758815/" target="_blank" rel="noopener">
+              Открыть карточку на Яндекс.Картах
+            </a>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot">
+      <div class="foot__brand"><img src="img/logo-cream.webp" width="392" height="196" alt="БАЗА"></div>
+      <div class="foot__links">
+        <a href="tel:+79529540707">+7 (952) 954-07-07</a>
+        <a href="https://t.me/BAZA243" target="_blank" rel="noopener">Telegram</a>
+        <a href="#services">Услуги</a>
+        <a href="#contacts">Контакты</a>
+      </div>
+      <div class="foot__copy">
+        © 2026 Барбершоп БАЗА
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<nav class="dock" aria-label="Быстрые действия">
+  <a class="dock__call" href="tel:+79529540707">Позвонить</a>
+  <a class="dock__book" href="https://n1817634.yclients.com/company/1613202/personal/menu?o=" target="_blank" rel="noopener">Записаться</a>
+</nav>
+
+<script type="module">
+  const BOOK = 'https://n1817634.yclients.com/company/1613202/personal/menu?o=';
+
+  // Источник: карточка БАЗЫ на Яндекс.Картах (org/4429758815), страница цен.
+  // Барбер и шеф-барбер — разные тарифы на одну услугу.
+  const SERVICES = [
+    { name: 'Стрижка', meta: 'мужская, любая форма', barber: 1500, chef: 2500, vip: true },
+    { name: 'Фейд', meta: 'плавный переход', barber: 1200, chef: 1600 },
+    { name: 'Стрижка машинкой', meta: 'одна длина', barber: 1000, chef: 1100 },
+    { name: 'Коррекция бороды', meta: 'усы и борода', barber: 900, chef: 1000 },
+    { name: 'Моделирование бороды', meta: 'форма и укладка', barber: 1200, chef: 1400 },
+    { name: 'Коррекция окантовки', meta: 'чистый край', barber: 1200, chef: 1600 },
+    { name: 'Детская стрижка', meta: 'до 7 лет', barber: 1400, chef: 2000 },
+  ];
+
+  const REVIEWS = [
+    {
+      text: 'Привела подстричь своих сыновей — результат оправдал все ожидания. Мастера профессионалы своего дела. Хочу отметить чистую и приятную атмосферу: с порога предложили напитки. 10/10, определённо будем ходить к вам.',
+      name: 'Мария Набокова',
+      date: '16 июля 2026',
+    },
+    {
+      text: 'Крутой интерьер и крутые мастера, знающие своё дело. Для ожидающих есть приставка и вкусный кофе. Ребёнок остался доволен.',
+      name: 'Дмитрий Михеев',
+      date: '9 августа 2026',
+    },
+    {
+      text: 'Большое спасибо барберу Заямиру! Он мастерски выполнил стрижку и подправил бороду, а ещё создал расслабленную и дружелюбную атмосферу — мы пообщались и посмеялись, время пролетело незаметно. Результат превзошёл ожидания.',
+      name: 'Александр Лопатин',
+      date: '17 апреля 2026',
+    },
+  ];
+
+  const el = (tag, cls, html) => {
+    const node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (html != null) node.innerHTML = html;
+    return node;
+  };
+
+  const rub = (n) => n.toLocaleString('ru-RU') + ' ₽';
+
+  const renderServices = (items, target) => {
+    const frag = document.createDocumentFragment();
+
+    const head = el('div', 'board__head');
+    head.append(el('span', '', 'Услуга'), el('span', '', 'Барбер'), el('span', '', 'Шеф-барбер'));
+    frag.append(head);
+
+    items.forEach((item, i) => {
+      const row = el('div', 'dish rise' + (item.vip ? ' dish--vip' : ''));
+      row.style.setProperty('--d', `${i * 40}ms`);
+      row.append(
+        el('span', 'dish__name', item.name + (item.vip ? '<span class="vip">VIP</span>' : '')),
+        el('span', 'dish__price dish__price--barber', rub(item.barber)),
+        el('span', 'dish__price dish__price--chef', rub(item.chef)),
+        el('span', 'dish__meta', item.meta),
+      );
+      frag.append(row);
+    });
+
+    target.append(frag);
+  };
+
+
+  const renderReviews = (items, target) => {
+    const frag = document.createDocumentFragment();
+    items.forEach((item, i) => {
+      const card = el('article', 'voice rise');
+      card.style.setProperty('--d', `${(i % 2) * 70}ms`);
+      card.append(
+        el('p', 'voice__text', `«${item.text}»`),
+        el('p', 'voice__name', item.name),
+        el('p', 'voice__src', 'Яндекс.Карты' + (item.date ? ` · ${item.date}` : '')),
+      );
+      frag.append(card);
+    });
+    target.append(frag);
+  };
+
+  renderServices(SERVICES, document.querySelector('#servicesGrid'));
+  renderReviews(REVIEWS, document.querySelector('#reviewsGrid'));
+
+  // Статус работы
+  (() => {
+    const hour = new Date().getHours();
+    const isOpen = hour >= 10 && hour < 22;
+    const status = document.querySelector('#status');
+    status.classList.toggle('is-open', isOpen);
+    document.querySelector('#statusText').textContent = isOpen
+      ? 'Открыто до 22:00'
+      : 'Закрыто · откроемся в 10:00';
+  })();
+
+  // Шапка при скролле
+  (() => {
+    const top = document.querySelector('#top');
+    const sync = () => top.classList.toggle('is-solid', window.scrollY > 24);
+    sync();
+    addEventListener('scroll', sync, { passive: true });
+  })();
+
+  // Мобильное меню
+  (() => {
+    const burger = document.querySelector('#burger');
+    const drawer = document.querySelector('#drawer');
+    const closeBtn = document.querySelector('#drawerClose');
+    const focusables = () => drawer.querySelectorAll('a[href], button:not([disabled])');
+
+    const open = () => {
+      drawer.classList.add('is-open');
+      drawer.removeAttribute('inert');
+      burger.setAttribute('aria-expanded', 'true');
+      document.documentElement.style.overflow = 'hidden';
+      closeBtn.focus();
+    };
+
+    const close = (returnFocus = true) => {
+      if (!drawer.classList.contains('is-open')) return;
+      drawer.classList.remove('is-open');
+      drawer.setAttribute('inert', '');
+      burger.setAttribute('aria-expanded', 'false');
+      document.documentElement.style.overflow = '';
+      if (returnFocus) burger.focus();
+    };
+
+    // Закрытый дровер не должен ловить Tab
+    drawer.setAttribute('inert', '');
+
+    burger.addEventListener('click', () => {
+      drawer.classList.contains('is-open') ? close() : open();
+    });
+
+    closeBtn.addEventListener('click', () => close());
+
+    drawer.querySelectorAll('[data-close]').forEach((link) => {
+      link.addEventListener('click', () => close(false));
+    });
+
+    addEventListener('keydown', (event) => {
+      if (!drawer.classList.contains('is-open')) return;
+
+      if (event.key === 'Escape') {
+        close();
+        return;
+      }
+
+      // Ловушка фокуса внутри диалога
+      if (event.key !== 'Tab') return;
+      const items = focusables();
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+  })();
+
+  // Параллакс витрины: объекты двигаются на разную глубину от курсора
+  (() => {
+    const vitrine = document.querySelector('#vitrine');
+    const hero = document.querySelector('#hero');
+    if (!vitrine || !hero) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    let frame = 0;
+
+    const apply = (x, y) => {
+      frame = 0;
+      const rect = hero.getBoundingClientRect();
+      const midX = rect.width / 2;
+      const midY = rect.height / 2;
+      vitrine.style.setProperty('--px', ((x - midX) / midX) * -14);
+      vitrine.style.setProperty('--py', ((y - midY) / midY) * -10);
+    };
+
+    hero.addEventListener('pointermove', (event) => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => apply(event.clientX, event.clientY));
+    }, { passive: true });
+
+    hero.addEventListener('pointerleave', () => {
+      vitrine.style.setProperty('--px', 0);
+      vitrine.style.setProperty('--py', 0);
+    });
+  })();
+
+  // Появление блоков
+  (() => {
+    const nodes = document.querySelectorAll('.rise');
+
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      nodes.forEach((node) => node.classList.add('is-in'));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+
+    nodes.forEach((node) => observer.observe(node));
+  })();
+</script>
+</body>
+</html>
